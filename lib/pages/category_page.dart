@@ -20,11 +20,25 @@ class _CategoryPageState extends State<CategoryPage> {
   void _getCategory()async{
     await request('getCategory').then((val){
       var data = json.decode(val.toString());
-      print(data);
-      // CategoryBigListModel list = CategoryBigListModel.formJson(data['data']);
-      // list.data.forEach((item){
-      //   print(item.mallCategoryName);
-      // });
+      data['data'].forEach((item){
+        print(item['mallCategoryName']);
+      });
     });
+  }
+}
+
+//菜单
+class LeftCategoryNav extends StatefulWidget {
+  @override
+  _LeftCategoryNavState createState() => _LeftCategoryNavState();
+}
+
+class _LeftCategoryNavState extends State<LeftCategoryNav> {
+  List list=[];
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      
+    );
   }
 }
