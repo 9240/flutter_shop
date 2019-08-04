@@ -10,6 +10,7 @@ class Routes{
     router.notFoundHandler = new Handler(
       handlerFunc: (BuildContext context,Map<String,List<String>> parame){
         print("找不到页面");
+        return ;
       }
     );
 

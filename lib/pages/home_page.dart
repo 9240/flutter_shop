@@ -26,6 +26,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
     return Scaffold(
       appBar: AppBar(title: Text("百姓生活+"),),
       body: FutureBuilder(
+        future: getHomePageContent(),
         builder: (context,snapshot){
           if(snapshot.hasData){
             //数据处理
@@ -79,7 +80,6 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
             );
           }
         },
-        future: getHomePageContent(),
       ),
     );
   }
@@ -155,7 +155,12 @@ class SwiperDiy extends StatelessWidget {
         pagination: SwiperPagination(),
         autoplay: true,
         itemBuilder: (BuildContext ctx,int index){
-          return Image.network("${swiperDateList[index]['image']}",fit: BoxFit.cover,);
+          return InkWell(
+            onTap: (){
+              Application.router.navigateTo(context, "/detail?id=${swiperDateList[index]['goodsId']}");
+            },
+            child: Image.network("${swiperDateList[index]['image']}",fit: BoxFit.cover,),
+          );
         },
       ),
     );
@@ -262,9 +267,11 @@ class Recommend extends StatelessWidget {
     );
   }
   //商品单独项方法
-  Widget _item(index){
+  Widget _item(context,index){
     return InkWell(
-      onTap: (){},
+      onTap: (){
+        Application.router.navigateTo(context, "/detail?id=${recommendList[index]['goodsId']}");
+      },
       child: Container(
         height: ScreenUtil().setHeight(350),
         width: ScreenUtil().setWidth(250),
@@ -304,7 +311,7 @@ class Recommend extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemCount: recommendList.length,
         itemBuilder: (BuildContext context,int index){
-          return _item(index);
+          return _item(context,index);
         },
       ),
     );
@@ -350,37 +357,37 @@ class FloorContent extends StatelessWidget {
     return Container(
       child: Column(
         children: <Widget>[
-          _firstRow(),
-          _otherGoods()
+          _firstRow(context),
+          _otherGoods(context)
         ],
       ),
     );
   }
 
-  Widget _firstRow(){
+  Widget _firstRow(context,){
     return Row(
       children: <Widget>[
-        _goodsItem(floorGoodsList[1]),
-        _goodsItem(floorGoodsList[2])
+        _goodsItem(context,floorGoodsList[1]),
+        _goodsItem(context,floorGoodsList[2])
       ],
     );
   }
 
-  Widget _otherGoods(){
+  Widget _otherGoods(context,){
     return Row(
       children: <Widget>[
-        _goodsItem(floorGoodsList[3]),
-        _goodsItem(floorGoodsList[4])
+        _goodsItem(context,floorGoodsList[3]),
+        _goodsItem(context,floorGoodsList[4])
       ],
     );
   }
 
-  Widget _goodsItem(Map goods){
+  Widget _goodsItem(context,Map goods){
     return Container(
       width: ScreenUtil().setWidth(375),
       child: InkWell(
         onTap: (){
-          print("屏幕的宽度${ScreenUtil.screenHeight}");
+          Application.router.navigateTo(context, "/detail?id=${goods['goodsId']}");
         },
         child: Image.network(goods['image']),
       ),
