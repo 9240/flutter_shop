@@ -4,11 +4,18 @@ import 'package:provide/provide.dart';
 import './provide/conuter.dart';
 import './provide/child_category.dart';
 import './provide/category_goods_list.dart';
+import 'package:fluro/fluro.dart';
+import './routers/application.dart';
+import './routers/routes.dart';
 void main(){
   var counter = Counter();
   var childCategory = ChildCategoty();
   var categoryGoodsListProvide = CategoryGoodsListProvide();
   var providers = Providers();
+
+
+  
+
   providers
   ..provide(Provider<Counter>.value(counter))
   ..provide(Provider<ChildCategoty>.value(childCategory))
@@ -24,6 +31,9 @@ void main(){
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final router = Router();
+    Routes.configRoutes(router);
+    Application.router = router;
     return Container(
       child: MaterialApp(
         title: "百姓生活+",
@@ -32,6 +42,7 @@ class MyApp extends StatelessWidget {
           primaryColor: Colors.pink
         ),
         home: IndexPage(),
+        onGenerateRoute: Application.router.generator,
       ),
     );
   }

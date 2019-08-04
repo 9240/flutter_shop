@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+import '../routers/application.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -67,7 +68,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
                   List<Map> newGoodsList = (data['data'] as List).cast();
                   setState(() {
                     hotGoodsList.addAll(newGoodsList);
-                  page++; 
+                    this.page++; 
                   });
                 });
               },
@@ -82,12 +83,15 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
       ),
     );
   }
-  //火爆专区主体内容
+  //火爆专区主体内容  
   Widget _wrapList(){
     if(hotGoodsList.length != 0){
       List<Widget> listWidget = hotGoodsList.map((val){
         return InkWell(
-          onTap: (){},
+          onTap: (){
+            Application.router.navigateTo(context, "/detail?id=${val['goodsId']}");
+            // print(Application.router);
+          },
           child: Container(
             width: ScreenUtil().setWidth(372),
             color: Colors.white,
