@@ -23,6 +23,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       appBar: AppBar(title: Text("百姓生活+"),),
       body: FutureBuilder(
@@ -31,12 +32,14 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
           if(snapshot.hasData){
             //数据处理
             var data = json.decode(snapshot.data.toString());
-            // print(data['data']['integralMallPic']);
             List<Map> swiper = (data['data']['slides'] as List).cast();
             List<Map> navigatorList = (data['data']['category'] as List).cast();
             String adPicture = data['data']['advertesPicture']['PICTURE_ADDRESS'];
             String leaderImage = data['data']['shopInfo']['leaderImage'];
             String leaderPhone = data['data']['shopInfo']['leaderPhone'];
+            String img1 = data['data']['saoma']['PICTURE_ADDRESS'];
+            String img2 = data['data']['integralMallPic']['PICTURE_ADDRESS'];
+            String img3 = data['data']['newUser']['PICTURE_ADDRESS'];
             List<Map> recommendList = (data['data']['recommend'] as List).cast();
             String floor1Title =data['data']['floor1Pic']['PICTURE_ADDRESS'];
             String floor2Title =data['data']['floor2Pic']['PICTURE_ADDRESS'];
@@ -51,6 +54,13 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
                   TopNavigator(navigatorList:navigatorList),
                   AdBanner(adPicture:adPicture),
                   LeaderPhone(leaderImage: leaderImage,leaderPhone: leaderPhone),
+                  Row(
+                    children: <Widget>[
+                      ad(img1),
+                      ad(img2),
+                      ad(img3),
+                    ],
+                  ),
                   Recommend(recommendList: recommendList),
                   FloorTitle(pictureAddress:floor1Title),
                   FloorContent(floorGoodsList:floor1),
@@ -125,7 +135,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
         children: listWidget,
       );
     }else{
-      return Text("");
+      return Text("正在加载内容");
     }
   }
   
@@ -136,6 +146,15 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
           _wrapList()
         ],
       ),
+    );
+  }
+
+  //推广图片
+  Widget ad(url){
+    return Container(
+      margin: EdgeInsets.only(top: 10.0),
+      width: ScreenUtil().setWidth(250),
+      child: Image.network(url),
     );
   }
 }
@@ -159,7 +178,7 @@ class SwiperDiy extends StatelessWidget {
             onTap: (){
               Application.router.navigateTo(context, "/detail?id=${swiperDateList[index]['goodsId']}");
             },
-            child: Image.network("${swiperDateList[index]['image']}",fit: BoxFit.cover,),
+            child: Image.network("${swiperDateList[index]['image']}",fit: BoxFit.cover),
           );
         },
       ),

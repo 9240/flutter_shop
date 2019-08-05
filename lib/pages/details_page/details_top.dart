@@ -20,7 +20,7 @@ class DetailTop extends StatelessWidget {
                 _goodsImage(goodsInfo['image1']),
                 _goodsName(goodsInfo['goodsName']),
                 _goodsNum(goodsInfo['goodsSerialNumber']),
-                _goodsPrice(goodsInfo['oriPrice'],goodsInfo['presentPrice'])
+                _goodsPrice(goodsInfo['presentPrice'],goodsInfo['oriPrice'])
               ],
             ),
           );
