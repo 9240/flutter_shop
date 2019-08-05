@@ -30,14 +30,16 @@ class CartProvide with ChangeNotifier{
       });
     }
     cartString = json.encode(tempList).toString();
-    print(cartString);
     prefs.setString('cartInfo', cartString);
+    notifyListeners();
   }
 
   //清空购物车
   remove() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('cartInfo');
+    this.cartString = '[]';
+    print("清空完成");
     notifyListeners();
   }
 }

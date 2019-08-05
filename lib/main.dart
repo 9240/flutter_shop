@@ -17,9 +17,6 @@ void main(){
   var cartProvide = CartProvide();
   var providers = Providers();
 
-
-  
-
   providers
   ..provide(Provider<Counter>.value(counter))
   ..provide(Provider<ChildCategoty>.value(childCategory))
