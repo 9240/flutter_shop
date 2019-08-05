@@ -3,6 +3,9 @@ import 'package:provide/provide.dart';
 import '../provide/details_info.dart';
 import './details_page/details_top.dart';
 import './details_page/details_explain.dart';
+import './details_page/details_tabbar.dart';
+import './details_page/details_web.dart';
+import './details_page/details_bottom.dart';
 
 class DeatilsPage extends StatelessWidget {
   final String goodsId;
@@ -25,13 +28,22 @@ class DeatilsPage extends StatelessWidget {
         future: _getBackInfo(context),
         builder: (BuildContext context,AsyncSnapshot snapshot){
           if(snapshot.hasData){
-            return Container(
-              child: Column(
-                children: <Widget>[
-                  DetailTop(),
-                  DetailExplain()
-                ],
-              ),
+            return Stack(
+              children: <Widget>[
+                ListView(
+                  children: <Widget>[
+                    DetailTop(),
+                    DetailExplain(),
+                    DetailTabBar(),
+                    DetailWeb()
+                  ],
+                ),
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  child: DetailsBottom(),
+                )
+              ],
             );
           }else{
             return Text("加载中");

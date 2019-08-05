@@ -7,6 +7,7 @@ import '../provide/child_category.dart';
 import '../provide/category_goods_list.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import '../routers/application.dart';
 
 class CategoryPage extends StatefulWidget {
   CategoryPage({Key key}) : super(key: key);
@@ -288,7 +289,8 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
   Widget _listWidget(List list,index){
     return InkWell(
       onTap: (){
-
+        // print(list[index]);
+        Application.router.navigateTo(context, "/detail?id=${list[index]['goodsId']}");
       },
       child: Container(
         padding: EdgeInsets.only(top: 5.0,bottom: 5.0),
